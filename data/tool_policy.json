@@ -1,0 +1,34 @@
+{
+  "tools": {
+    "search_knowledge_base": {
+      "risk": "low",
+      "requires_confirmation": false,
+      "type": "read"
+    },
+    "get_order_status": {
+      "risk": "low",
+      "requires_confirmation": false,
+      "type": "read"
+    },
+    "get_customer_profile": {
+      "risk": "medium",
+      "requires_confirmation": false,
+      "type": "read_sensitive"
+    },
+    "create_support_ticket": {
+      "risk": "medium",
+      "requires_confirmation": false,
+      "type": "write"
+    },
+    "refund_payment": {
+      "risk": "high",
+      "requires_confirmation": true,
+      "type": "financial_action"
+    },
+    "delete_customer_account": {
+      "risk": "critical",
+      "requires_confirmation": true,
+      "type": "destructive_action"
+    }
+  }
+}

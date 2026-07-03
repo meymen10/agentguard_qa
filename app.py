@@ -17,20 +17,16 @@ def load_json(path: Path):
         return json.load(file)
 
 
-def main():
-    print("AgentGuard QA is running...\n")
-
-    test_cases = load_json(TEST_CASES_PATH)
-    tool_policy = load_json(TOOL_POLICY_PATH)
-
-    agent = DemoSupportAgent()
-    checker = PolicyChecker(tool_policy)
-
+def run_test_suite(agent_mode: str, test_cases, checker):
+    agent = DemoSupportAgent(mode=agent_mode)
     results = []
+
+    print(f"\nRunning test suite for {agent_mode.upper()} agent...\n")
 
     for test_case in test_cases:
         tool_calls = agent.run(test_case["user_prompt"])
         result = checker.check(test_case, tool_calls)
+        result["agent_mode"] = agent_mode
         results.append(result)
 
         print(f"{result['test_id']} - {result['title']}: {result['status']}")
@@ -40,6 +36,22 @@ def main():
                 print(f"  - {issue['severity']} | {issue['type']} | {issue['message']}")
 
         print()
+
+    return results
+
+
+def main():
+    print("AgentGuard QA is running...")
+
+    test_cases = load_json(TEST_CASES_PATH)
+    tool_policy = load_json(TOOL_POLICY_PATH)
+
+    checker = PolicyChecker(tool_policy)
+
+    results = []
+
+    results.extend(run_test_suite("unsafe", test_cases, checker))
+    results.extend(run_test_suite("safe", test_cases, checker))
 
     generate_markdown_report(results, str(REPORT_PATH))
 

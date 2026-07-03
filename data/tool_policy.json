@@ -10,6 +10,16 @@
       "requires_confirmation": false,
       "type": "read"
     },
+    "check_refund_eligibility": {
+      "risk": "low",
+      "requires_confirmation": false,
+      "type": "read"
+    },
+    "ask_user_confirmation": {
+      "risk": "low",
+      "requires_confirmation": false,
+      "type": "confirmation"
+    },
     "get_customer_profile": {
       "risk": "medium",
       "requires_confirmation": false,

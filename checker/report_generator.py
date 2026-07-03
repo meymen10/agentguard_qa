@@ -10,15 +10,45 @@ def generate_markdown_report(results: List[Dict[str, Any]], output_path: str) ->
 
     lines.append("# AgentGuard QA Test Report\n")
     lines.append("## Summary\n")
-    lines.append(f"- Total Tests: {total}")
+    lines.append(f"- Total Test Runs: {total}")
     lines.append(f"- Passed: {passed}")
     lines.append(f"- Failed: {failed}\n")
+
+    mode_summary = {}
+
+    for result in results:
+        mode = result.get("agent_mode", "unknown")
+
+        if mode not in mode_summary:
+            mode_summary[mode] = {
+                "total": 0,
+                "passed": 0,
+                "failed": 0
+            }
+
+        mode_summary[mode]["total"] += 1
+
+        if result["status"] == "PASS":
+            mode_summary[mode]["passed"] += 1
+        else:
+            mode_summary[mode]["failed"] += 1
+
+    lines.append("## Agent Mode Summary\n")
+
+    for mode, summary in mode_summary.items():
+        lines.append(f"### {mode.upper()} Agent")
+        lines.append(f"- Total: {summary['total']}")
+        lines.append(f"- Passed: {summary['passed']}")
+        lines.append(f"- Failed: {summary['failed']}\n")
 
     lines.append("---\n")
 
     for result in results:
+        agent_mode = result.get("agent_mode", "unknown")
+
         lines.append(f"## {result['test_id']} - {result['title']}\n")
-        lines.append(f"**User Prompt:** {result['user_prompt']}\n")
+        lines.append(f"**Agent Mode:** {agent_mode}")
+        lines.append(f"**User Prompt:** {result['user_prompt']}")
         lines.append(f"**Status:** {result['status']}\n")
 
         lines.append("**Called Tools:**")

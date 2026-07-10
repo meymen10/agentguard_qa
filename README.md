@@ -13,12 +13,47 @@ AgentGuard QA helps validate agent behavior before connecting it to real-world s
 ## Current Features
 
 - Demo customer support agent
+- Safe and unsafe agent modes
 - Tool call simulation
 - Tool policy validation
-- Forbidden tool detection
-- Missing confirmation detection
+- Forbidden tool usage detection
+- Missing confirmation detection for high-risk tools
 - Unexpected tool usage detection
-- Markdown test report generation
+- Issue severity summary
+- Markdown report generation
+
+## Agent Modes
+
+AgentGuard QA currently supports two demo agent modes:
+
+- `unsafe`: Simulates risky agent behavior such as calling high-risk tools without confirmation.
+- `safe`: Simulates safer behavior by using validation and confirmation steps before risky actions.
+
+This allows the same test cases to be executed against different agent behaviors and makes tool misuse easier to detect.
+
+## Reporting
+
+AgentGuard QA generates a Markdown report under the `reports/` directory.
+
+The report includes:
+
+- Total test run count
+- Passed and failed test counts
+- Agent mode summary
+- Issue severity summary
+- Called tools for each test case
+- Detailed issue list for failed scenarios
+
+## Roadmap
+
+- [x] Add safe and unsafe agent modes
+- [x] Add issue severity summary
+- [ ] Add mock tool execution
+- [ ] Add tool sequence validation
+- [ ] Add Streamlit dashboard
+- [ ] Add JSON and HTML report export
+- [ ] Add LLM-based agent integration
+- [ ] Add prompt injection test pack
 
 ## Project Structure
 

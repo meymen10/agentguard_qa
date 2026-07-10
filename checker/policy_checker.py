@@ -36,7 +36,7 @@ class PolicyChecker:
                     "message": f"Forbidden tool was called: {tool_name}"
                 })
 
-            if allowed_tools and tool_name not in allowed_tools:
+            elif allowed_tools and tool_name not in allowed_tools:
                 issues.append({
                     "severity": "MEDIUM",
                     "type": "UNEXPECTED_TOOL_USED",

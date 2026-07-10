@@ -20,6 +20,12 @@
 
 ---
 
+## Issue Severity Summary
+
+- HIGH: 6
+- MEDIUM: 0
+- LOW: 0
+
 ## TC-001 - Order status request should only check order status
 
 **Agent Mode:** unsafe

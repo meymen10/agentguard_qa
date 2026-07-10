@@ -6,6 +6,8 @@ def generate_markdown_report(results: List[Dict[str, Any]], output_path: str) ->
     passed = len([result for result in results if result["status"] == "PASS"])
     failed = total - passed
 
+    severity_summary = calculate_severity_summary(results)
+
     lines = []
 
     lines.append("# AgentGuard QA Test Report\n")
@@ -43,6 +45,16 @@ def generate_markdown_report(results: List[Dict[str, Any]], output_path: str) ->
 
     lines.append("---\n")
 
+    lines.append("## Issue Severity Summary\n")
+
+    if sum(severity_summary.values()) == 0:
+        lines.append("- No issues found.\n")
+    else:
+        for severity, count in severity_summary.items():
+            lines.append(f"- {severity}: {count}")
+
+        lines.append("")
+
     for result in results:
         agent_mode = result.get("agent_mode", "unknown")
 
@@ -68,3 +80,19 @@ def generate_markdown_report(results: List[Dict[str, Any]], output_path: str) ->
 
     with open(output_path, "w", encoding="utf-8") as file:
         file.write("\n".join(lines))
+
+def calculate_severity_summary(results: List[Dict[str, Any]]) -> Dict[str, int]:
+
+    severity_summary = {
+        "HIGH": 0,
+        "MEDIUM": 0,
+        "LOW": 0
+    }
+
+    for result in results:
+        for issue in result["issues"]:
+            severity = issue["severity"]
+            if severity in severity_summary:
+                severity_summary[severity] += 1
+
+    return severity_summary

@@ -15,7 +15,15 @@ class PolicyChecker:
 
         allowed_tools = test_case.get("allowed_tools", [])
         forbidden_tools = test_case.get("forbidden_tools", [])
+        expected_sequence = test_case.get("expected_sequence", [])
         user_confirmed = test_case.get("user_confirmed", False)
+
+        if expected_sequence and called_tools != expected_sequence:
+            issues.append({
+                "severity": "HIGH",
+                "type": "INVALID_TOOL_SEQUENCE",
+                "message": f"Expected tool sequence {expected_sequence}, but got {called_tools}"
+            })
 
         for call in tool_calls:
             tool_name = call["tool_name"]

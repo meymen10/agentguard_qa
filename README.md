@@ -15,6 +15,7 @@ AgentGuard QA helps validate agent behavior before connecting it to real-world s
 - Demo customer support agent
 - Safe and unsafe agent modes
 - Tool call simulation
+- Mock tool execution layer
 - Tool policy validation
 - Forbidden tool usage detection
 - Missing confirmation detection for high-risk tools
@@ -65,7 +66,7 @@ The expected sequence can be configured per test case and per agent mode in [dat
 - [x] Add safe and unsafe agent modes
 - [x] Add issue severity summary
 - [x] Add tool sequence validation
-- [ ] Add mock tool execution
+- [x] Add mock tool execution
 - [ ] Add Streamlit dashboard
 - [ ] Add JSON and HTML report export
 - [ ] Add LLM-based agent integration

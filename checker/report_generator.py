@@ -67,6 +67,18 @@ def generate_markdown_report(results: List[Dict[str, Any]], output_path: str) ->
         for tool in result["called_tools"]:
             lines.append(f"- {tool}")
 
+        tool_executions = result.get("tool_executions", [])
+        if tool_executions:
+            lines.append("\n**Tool Executions:**")
+            for execution in tool_executions:
+                details = execution.get("execution", {})
+                lines.append(
+                    f"- {execution['tool_name']} [{details.get('status', 'unknown')}]"
+                )
+                message = details.get("message")
+                if message:
+                    lines.append(f"  - {message}")
+
         sequence_validation = result.get("tool_sequence_validation", {})
         if sequence_validation:
             lines.append(f"\n**Tool Sequence Validation:** {sequence_validation['status']}")

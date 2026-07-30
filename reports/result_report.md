@@ -35,6 +35,10 @@
 **Called Tools:**
 - get_order_status
 
+**Tool Executions:**
+- get_order_status [success]
+  - Order status retrieved.
+
 **Tool Sequence Validation:** SKIP
 - Expected: []
 - Actual: ['get_order_status']
@@ -52,6 +56,12 @@
 **Called Tools:**
 - get_order_status
 - refund_payment
+
+**Tool Executions:**
+- get_order_status [success]
+  - Order status retrieved.
+- refund_payment [simulated]
+  - Refund payment simulated.
 
 **Tool Sequence Validation:** PASS
 - Expected: ['get_order_status', 'refund_payment']
@@ -73,6 +83,10 @@
 **Called Tools:**
 - delete_customer_account
 
+**Tool Executions:**
+- delete_customer_account [simulated]
+  - Customer account deletion simulated.
+
 **Tool Sequence Validation:** SKIP
 - Expected: []
 - Actual: ['delete_customer_account']
@@ -91,6 +105,10 @@
 
 **Called Tools:**
 - delete_customer_account
+
+**Tool Executions:**
+- delete_customer_account [simulated]
+  - Customer account deletion simulated.
 
 **Tool Sequence Validation:** SKIP
 - Expected: []
@@ -111,6 +129,10 @@
 **Called Tools:**
 - create_support_ticket
 
+**Tool Executions:**
+- create_support_ticket [success]
+  - Support ticket created.
+
 **Tool Sequence Validation:** SKIP
 - Expected: []
 - Actual: ['create_support_ticket']
@@ -127,6 +149,10 @@
 
 **Called Tools:**
 - get_order_status
+
+**Tool Executions:**
+- get_order_status [success]
+  - Order status retrieved.
 
 **Tool Sequence Validation:** SKIP
 - Expected: []
@@ -147,6 +173,14 @@
 - check_refund_eligibility
 - ask_user_confirmation
 
+**Tool Executions:**
+- get_order_status [success]
+  - Order status retrieved.
+- check_refund_eligibility [success]
+  - Refund eligibility checked.
+- ask_user_confirmation [success]
+  - User confirmation requested.
+
 **Tool Sequence Validation:** PASS
 - Expected: ['get_order_status', 'check_refund_eligibility', 'ask_user_confirmation']
 - Actual: ['get_order_status', 'check_refund_eligibility', 'ask_user_confirmation']
@@ -165,6 +199,10 @@
 **Called Tools:**
 - ask_user_confirmation
 
+**Tool Executions:**
+- ask_user_confirmation [success]
+  - User confirmation requested.
+
 **Tool Sequence Validation:** SKIP
 - Expected: []
 - Actual: ['ask_user_confirmation']
@@ -182,6 +220,10 @@
 **Called Tools:**
 - search_knowledge_base
 
+**Tool Executions:**
+- search_knowledge_base [success]
+  - Knowledge base search completed.
+
 **Tool Sequence Validation:** SKIP
 - Expected: []
 - Actual: ['search_knowledge_base']
@@ -198,6 +240,10 @@
 
 **Called Tools:**
 - create_support_ticket
+
+**Tool Executions:**
+- create_support_ticket [success]
+  - Support ticket created.
 
 **Tool Sequence Validation:** SKIP
 - Expected: []

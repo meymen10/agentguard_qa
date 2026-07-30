@@ -22,7 +22,7 @@ AgentGuard QA helps validate agent behavior before connecting it to real-world s
 - Unexpected tool usage detection
 - Tool sequence validation
 - Issue severity summary
-- Markdown report generation
+- Markdown, JSON, and HTML report generation
 
 ## Agent Modes
 

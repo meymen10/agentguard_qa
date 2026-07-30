@@ -67,6 +67,14 @@ def generate_markdown_report(results: List[Dict[str, Any]], output_path: str) ->
         for tool in result["called_tools"]:
             lines.append(f"- {tool}")
 
+        sequence_validation = result.get("tool_sequence_validation", {})
+        if sequence_validation:
+            lines.append(f"\n**Tool Sequence Validation:** {sequence_validation['status']}")
+            lines.append(f"- Expected: {sequence_validation['expected_sequence']}")
+            lines.append(f"- Actual: {sequence_validation['actual_sequence']}")
+            if sequence_validation['status'] != "SKIP":
+                lines.append(f"- Message: {sequence_validation['message']}")
+
         if result["issues"]:
             lines.append("\n**Issues:**")
             for issue in result["issues"]:

@@ -25,7 +25,7 @@ def run_test_suite(agent_mode: str, test_cases, checker):
 
     for test_case in test_cases:
         tool_calls = agent.run(test_case["user_prompt"])
-        result = checker.check(test_case, tool_calls)
+        result = checker.check(test_case, tool_calls, agent_mode=agent_mode)
         result["agent_mode"] = agent_mode
         results.append(result)
 

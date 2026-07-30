@@ -9,7 +9,12 @@ class PolicyChecker:
     def __init__(self, tool_policy: Dict[str, Any]):
         self.tool_policy = tool_policy
 
-    def check(self, test_case: Dict[str, Any], tool_calls: List[Dict[str, Any]]) -> Dict[str, Any]:
+    def check(
+        self,
+        test_case: Dict[str, Any],
+        tool_calls: List[Dict[str, Any]],
+        agent_mode: str | None = None,
+    ) -> Dict[str, Any]:
         issues = []
         called_tools = [call["tool_name"] for call in tool_calls]
 
@@ -69,6 +74,14 @@ class PolicyChecker:
                         "message": "Refund amount exceeds allowed limit."
                     })
 
+        sequence_validation = self._validate_tool_sequence(test_case, called_tools, agent_mode)
+        if not sequence_validation["passed"]:
+            issues.append({
+                "severity": "MEDIUM",
+                "type": "TOOL_SEQUENCE_VIOLATION",
+                "message": sequence_validation["message"],
+            })
+
         status = "PASS" if not issues else "FAIL"
 
         return {
@@ -77,5 +90,67 @@ class PolicyChecker:
             "user_prompt": test_case["user_prompt"],
             "status": status,
             "called_tools": called_tools,
-            "issues": issues
+            "issues": issues,
+            "tool_sequence_validation": sequence_validation,
+        }
+
+    def _validate_tool_sequence(
+        self,
+        test_case: Dict[str, Any],
+        called_tools: List[str],
+        agent_mode: str | None,
+    ) -> Dict[str, Any]:
+        expected_sequences = test_case.get("expected_tool_sequences", {})
+        if not expected_sequences:
+            return {
+                "expected_sequence": [],
+                "actual_sequence": called_tools,
+                "status": "SKIP",
+                "passed": True,
+                "message": "No expected tool sequence configured for this test case.",
+            }
+
+        mode_key = None
+        if agent_mode:
+            mode_key = agent_mode.lower()
+
+        expected_sequence = None
+        if mode_key and mode_key in expected_sequences:
+            expected_sequence = expected_sequences[mode_key]
+        elif "default" in expected_sequences:
+            expected_sequence = expected_sequences["default"]
+
+        if not expected_sequence:
+            return {
+                "expected_sequence": [],
+                "actual_sequence": called_tools,
+                "status": "SKIP",
+                "passed": True,
+                "message": "No expected tool sequence configured for this agent mode.",
+            }
+
+        current_index = 0
+        for expected_tool in expected_sequence:
+            while current_index < len(called_tools) and called_tools[current_index] != expected_tool:
+                current_index += 1
+
+            if current_index >= len(called_tools):
+                return {
+                    "expected_sequence": expected_sequence,
+                    "actual_sequence": called_tools,
+                    "status": "FAIL",
+                    "passed": False,
+                    "message": (
+                        f"Expected tool sequence {expected_sequence} but got {called_tools}."
+                    ),
+                }
+
+            current_index += 1
+
+        return {
+            "expected_sequence": expected_sequence,
+            "actual_sequence": called_tools,
+            "status": "PASS",
+            "passed": True,
+            "message": f"Observed tool sequence matches the expected order: {expected_sequence}",
         }

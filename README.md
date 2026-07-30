@@ -56,6 +56,9 @@ For example, a safe refund flow should follow this sequence:
 get_order_status
 → check_refund_eligibility
 → ask_user_confirmation
+```
+
+The expected sequence can be configured per test case and per agent mode in [data/test_cases.json](data/test_cases.json), and the checker reports whether the observed tool call order matched the expected flow.
 
 ## Roadmap
 

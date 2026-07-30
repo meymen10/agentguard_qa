@@ -35,17 +35,19 @@ This allows the same test cases to be executed against different agent behaviors
 
 ## Reporting
 
-AgentGuard QA generates a Markdown report under the `reports/` directory.
+AgentGuard QA generates Markdown, JSON, and HTML reports under the `reports/` directory (result_report.md, result_report.json, result_report.html).
 
-The report includes:
+Reports include:
 
 - Total test run count
 - Passed and failed test counts
 - Agent mode summary
 - Issue severity summary
-- Called tools for each test case
+- Called tools and mock execution results for each test case
 - Detailed issue list for failed scenarios
 - Tool sequence validation results
+
+JSON output is machine-readable for CI and dashboards; HTML is a convenient human-friendly view.
 
 ## Tool Sequence Validation
 
@@ -67,8 +69,8 @@ The expected sequence can be configured per test case and per agent mode in [dat
 - [x] Add issue severity summary
 - [x] Add tool sequence validation
 - [x] Add mock tool execution
+- [x] Add JSON and HTML report export
 - [ ] Add Streamlit dashboard
-- [ ] Add JSON and HTML report export
 - [ ] Add LLM-based agent integration
 - [ ] Add prompt injection test pack
 
@@ -89,10 +91,39 @@ agentguard_qa/
 │   └── tool_policy.json
 │
 ├── reports/
-│   └── result_report.md
+│   ├── result_report.md
+│   ├── result_report.json
+│   └── result_report.html
 │
 ├── tools/
 │   └── mock_tools.py
 │
+├── tests/
+│   └── test_policy_checker.py
+│
 ├── app.py
 └── README.md
+```
+
+## Usage
+
+Run the test suite and generate reports:
+
+- Run all tests:
+  python -m unittest discover -s tests -p 'test*.py'
+
+- Run the application and produce reports:
+  python app.py
+
+Reports are written to the reports/ directory:
+- reports/result_report.md   (Markdown)
+- reports/result_report.json (Machine-readable JSON)
+- reports/result_report.html (Human-friendly HTML view)
+
+Inspect mock tool executions:
+- The mock executor records an execution result for each tool call in the generated reports under "Tool Executions".
+
+Contributions and extending the project:
+- Add more test cases to data/test_cases.json
+- Implement Streamlit dashboard to visualize results
+- Integrate with CI to run on pull requests

@@ -3,7 +3,7 @@ from typing import List, Dict, Any
 
 class PolicyChecker:
     """
-    Agent tool calls üzerinde güvenlik ve uygunluk kontrolleri yapar.
+    Performs security and compliance checks on agent tool calls.
     """
 
     def __init__(self, tool_policy: Dict[str, Any]):

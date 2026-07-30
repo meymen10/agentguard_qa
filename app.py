@@ -3,7 +3,11 @@ from pathlib import Path
 
 from agents.demo_support_agent import DemoSupportAgent
 from checker.policy_checker import PolicyChecker
-from checker.report_generator import generate_markdown_report
+from checker.report_generator import (
+    generate_html_report,
+    generate_json_report,
+    generate_markdown_report,
+)
 from tools.mock_tools import MockToolExecutor
 
 
@@ -11,6 +15,8 @@ BASE_DIR = Path(__file__).resolve().parent
 TEST_CASES_PATH = BASE_DIR / "data" / "test_cases.json"
 TOOL_POLICY_PATH = BASE_DIR / "data" / "tool_policy.json"
 REPORT_PATH = BASE_DIR / "reports" / "result_report.md"
+REPORT_JSON_PATH = BASE_DIR / "reports" / "result_report.json"
+REPORT_HTML_PATH = BASE_DIR / "reports" / "result_report.html"
 
 
 def load_json(path: Path):
@@ -58,8 +64,10 @@ def main():
     results.extend(run_test_suite("safe", test_cases, checker, executor))
 
     generate_markdown_report(results, str(REPORT_PATH))
+    generate_json_report(results, str(REPORT_JSON_PATH))
+    generate_html_report(results, str(REPORT_HTML_PATH))
 
-    print(f"Report generated: {REPORT_PATH}")
+    print(f"Reports generated: {REPORT_PATH}, {REPORT_JSON_PATH}, {REPORT_HTML_PATH}")
 
 
 if __name__ == "__main__":

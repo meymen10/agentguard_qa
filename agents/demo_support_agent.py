@@ -29,7 +29,7 @@ class DemoSupportAgent:
         Unsafe agent directly calls risky tools without enough validation.
         """
 
-        if "önceki talimatları unut" in prompt and "hesabımı sil" in prompt:
+        if "forget previous instructions" in prompt and "delete my account" in prompt:
             return [
                 {
                     "tool_name": "delete_customer_account",
@@ -39,7 +39,7 @@ class DemoSupportAgent:
                 }
             ]
 
-        if "sipariş" in prompt or "kargo" in prompt or "nerede" in prompt:
+        if "order" in prompt or "shipment" in prompt or "where" in prompt:
             return [
                 {
                     "tool_name": "get_order_status",
@@ -49,7 +49,7 @@ class DemoSupportAgent:
                 }
             ]
 
-        if "iade" in prompt or "paramı" in prompt or "refund" in prompt:
+        if "refund" in prompt or "my money" in prompt:
             return [
                 {
                     "tool_name": "get_order_status",
@@ -66,7 +66,7 @@ class DemoSupportAgent:
                 }
             ]
 
-        if "hesabımı sil" in prompt or "hesabı kapat" in prompt:
+        if "delete my account" in prompt or "close account" in prompt:
             return [
                 {
                     "tool_name": "delete_customer_account",
@@ -76,7 +76,7 @@ class DemoSupportAgent:
                 }
             ]
 
-        if "profil" in prompt or "bilgilerim" in prompt:
+        if "profile" in prompt or "my information" in prompt:
             return [
                 {
                     "tool_name": "get_customer_profile",
@@ -86,7 +86,7 @@ class DemoSupportAgent:
                 }
             ]
 
-        if "destek" in prompt or "şikayet" in prompt or "yardım" in prompt:
+        if "support" in prompt or "complaint" in prompt or "help" in prompt:
             return [
                 {
                     "tool_name": "create_support_ticket",
@@ -111,7 +111,7 @@ class DemoSupportAgent:
         Safe agent avoids destructive or financial actions without confirmation.
         """
 
-        if "önceki talimatları unut" in prompt:
+        if "forget previous instructions" in prompt:
             return [
                 {
                     "tool_name": "search_knowledge_base",
@@ -121,7 +121,7 @@ class DemoSupportAgent:
                 }
             ]
 
-        if "sipariş" in prompt or "kargo" in prompt or "nerede" in prompt:
+        if "order" in prompt or "shipment" in prompt or "where" in prompt:
             return [
                 {
                     "tool_name": "get_order_status",
@@ -131,7 +131,7 @@ class DemoSupportAgent:
                 }
             ]
 
-        if "iade" in prompt or "paramı" in prompt or "refund" in prompt:
+        if "refund" in prompt or "my money" in prompt:
             return [
                 {
                     "tool_name": "get_order_status",
@@ -153,7 +153,7 @@ class DemoSupportAgent:
                 }
             ]
 
-        if "hesabımı sil" in prompt or "hesabı kapat" in prompt:
+        if "delete my account" in prompt or "close account" in prompt:
             return [
                 {
                     "tool_name": "ask_user_confirmation",
@@ -163,7 +163,7 @@ class DemoSupportAgent:
                 }
             ]
 
-        if "profil" in prompt or "bilgilerim" in prompt:
+        if "profile" in prompt or "my information" in prompt:
             return [
                 {
                     "tool_name": "get_customer_profile",
@@ -173,7 +173,7 @@ class DemoSupportAgent:
                 }
             ]
 
-        if "destek" in prompt or "şikayet" in prompt or "yardım" in prompt:
+        if "support" in prompt or "complaint" in prompt or "help" in prompt:
             return [
                 {
                     "tool_name": "create_support_ticket",

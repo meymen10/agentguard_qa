@@ -23,6 +23,7 @@ AgentGuard QA helps validate agent behavior before connecting it to real-world s
 - Tool sequence validation
 - Issue severity summary
 - Markdown, JSON, and HTML report generation
+- Unit tests for policy checking, reporting, and mock tool execution
 
 ## Agent Modes
 
@@ -95,11 +96,14 @@ agentguard_qa/
 │   ├── result_report.json
 │   └── result_report.html
 │
-├── tools/
-│   └── mock_tools.py
-│
 ├── tests/
-│   └── test_policy_checker.py
+│   ├── test_policy_checker.py
+│   ├── test_mock_tools.py
+│   └── test_report_generator.py
+│
+├── tools/
+│   ├── __init__.py
+│   └── mock_tools.py
 │
 ├── app.py
 └── README.md
@@ -109,7 +113,7 @@ agentguard_qa/
 
 Run the test suite and generate reports:
 
-- Run all tests:
+- Run all unit tests:
   python -m unittest discover -s tests -p 'test*.py'
 
 - Run the application and produce reports:
@@ -121,9 +125,11 @@ Reports are written to the reports/ directory:
 - reports/result_report.html (Human-friendly HTML view)
 
 Inspect mock tool executions:
-- The mock executor records an execution result for each tool call in the generated reports under "Tool Executions".
+- The mock executor records an execution result for each tool call and includes it in the generated reports under "Tool Executions".
+- The checker also validates the observed tool sequence against the expected flow configured per test case.
 
 Contributions and extending the project:
 - Add more test cases to data/test_cases.json
-- Implement Streamlit dashboard to visualize results
+- Extend the mock tool layer for new tool types
+- Implement a Streamlit dashboard to visualize results
 - Integrate with CI to run on pull requests

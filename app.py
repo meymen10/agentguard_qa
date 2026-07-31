@@ -1,7 +1,9 @@
 import json
+import sys
 from pathlib import Path
 
 from agents.demo_support_agent import DemoSupportAgent
+from agents.llm_support_agent import LLMSupportAgent
 from checker.policy_checker import PolicyChecker
 from checker.report_generator import (
     generate_html_report,
@@ -24,8 +26,15 @@ def load_json(path: Path):
         return json.load(file)
 
 
+def create_agent(agent_mode: str):
+    if agent_mode == "llm":
+        return LLMSupportAgent(fallback_mode="safe")
+
+    return DemoSupportAgent(mode=agent_mode)
+
+
 def run_test_suite(agent_mode: str, test_cases, checker, executor: MockToolExecutor):
-    agent = DemoSupportAgent(mode=agent_mode)
+    agent = create_agent(agent_mode)
     results = []
 
     print(f"\nRunning test suite for {agent_mode.upper()} agent...\n")
@@ -59,9 +68,12 @@ def main():
     executor = MockToolExecutor()
 
     results = []
+    agent_modes = ["unsafe", "safe"]
+    if "--llm" in sys.argv:
+        agent_modes.append("llm")
 
-    results.extend(run_test_suite("unsafe", test_cases, checker, executor))
-    results.extend(run_test_suite("safe", test_cases, checker, executor))
+    for agent_mode in agent_modes:
+        results.extend(run_test_suite(agent_mode, test_cases, checker, executor))
 
     generate_markdown_report(results, str(REPORT_PATH))
     generate_json_report(results, str(REPORT_JSON_PATH))

@@ -24,7 +24,8 @@ AgentGuard QA helps validate agent behavior before connecting it to real-world s
 - Issue severity summary
 - Markdown, JSON, and HTML report generation
 - Streamlit dashboard for interactive report review
-- Unit tests for policy checking, reporting, mock tool execution, and dashboard helpers
+- Optional LLM-backed agent adapter with safe fallback
+- Unit tests for policy checking, reporting, mock tool execution, dashboard helpers, and LLM adapter parsing
 
 ## Agent Modes
 
@@ -108,6 +109,9 @@ agentguard_qa/
 │
 ├── app.py
 ├── dashboard.py
+├── agents/
+│   ├── demo_support_agent.py
+│   └── llm_support_agent.py
 ├── requirements.txt
 └── README.md
 ```
@@ -121,6 +125,11 @@ Run the test suite and generate reports:
 
 - Run the application and produce reports:
   python app.py
+
+- Run the application with an additional LLM-backed agent mode:
+  python app.py --llm
+
+If you want the LLM-backed mode to call a real provider, set OPENAI_API_KEY (and optionally OPENAI_BASE_URL). When no API key is configured, the adapter automatically falls back to the safe demo agent.
 
 Reports are written to the reports/ directory:
 - reports/result_report.md   (Markdown)

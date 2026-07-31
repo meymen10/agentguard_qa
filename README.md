@@ -23,7 +23,8 @@ AgentGuard QA helps validate agent behavior before connecting it to real-world s
 - Tool sequence validation
 - Issue severity summary
 - Markdown, JSON, and HTML report generation
-- Unit tests for policy checking, reporting, and mock tool execution
+- Streamlit dashboard for interactive report review
+- Unit tests for policy checking, reporting, mock tool execution, and dashboard helpers
 
 ## Agent Modes
 
@@ -71,7 +72,7 @@ The expected sequence can be configured per test case and per agent mode in [dat
 - [x] Add tool sequence validation
 - [x] Add mock tool execution
 - [x] Add JSON and HTML report export
-- [ ] Add Streamlit dashboard
+- [x] Add Streamlit dashboard
 - [ ] Add LLM-based agent integration
 - [ ] Add prompt injection test pack
 
@@ -106,6 +107,8 @@ agentguard_qa/
 │   └── mock_tools.py
 │
 ├── app.py
+├── dashboard.py
+├── requirements.txt
 └── README.md
 ```
 
@@ -123,6 +126,11 @@ Reports are written to the reports/ directory:
 - reports/result_report.md   (Markdown)
 - reports/result_report.json (Machine-readable JSON)
 - reports/result_report.html (Human-friendly HTML view)
+
+Launch the dashboard locally:
+- Install dependencies: pip install -r requirements.txt
+- Start the dashboard: streamlit run dashboard.py
+- Optional: point it at another report file: streamlit run dashboard.py reports/result_report.json
 
 Inspect mock tool executions:
 - The mock executor records an execution result for each tool call and includes it in the generated reports under "Tool Executions".
